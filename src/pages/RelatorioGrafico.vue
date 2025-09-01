@@ -58,7 +58,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, watch  } from "vue";
 import { useRouter } from "vue-router";
 import axios from "axios";
 import ApexCharts from "vue3-apexcharts";
@@ -197,6 +197,9 @@ async function baixarPDF() {
     console.error("Erro ao baixar PDF:", error);
   }
 }
+watch([tipoRelatorio, periodo], () => {
+  gerarRelatorio();
+});
 
 onMounted(carregarDadosLogin);
 </script>
