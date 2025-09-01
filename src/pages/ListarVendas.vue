@@ -67,6 +67,7 @@
 
 <script>
 import axios from "axios";
+import { cadastroFuncionario } from 'src/stores/registroFuncionario.js'
 
 export default {
   data() {
@@ -82,7 +83,7 @@ export default {
   methods: {
     async buscarVendas() {
       try {
-        const res = await axios.get("http://localhost:3333/historico-vendas");
+        const res = await axios.get(`http://localhost:3333/historico-vendas/${cadastroFuncionario.value.dadosLogin.codEmpresa}`);
         this.jsonData = res.data;
         this.aplicarFiltro(this.filtroAtual);
       } catch (err) {

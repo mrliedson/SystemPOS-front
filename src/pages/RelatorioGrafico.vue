@@ -120,6 +120,28 @@ async function carregarDadosLogin() {
   }
 }
 
+function formatarLabelPorPeriodo(data, periodo) {
+  const date = new Date(data);
+
+  const diasSemana = ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"];
+  const mesesAno = [
+    "Jan", "Fev", "Mar", "Abr", "Mai", "Jun",
+    "Jul", "Ago", "Set", "Out", "Nov", "Dez"
+  ];
+
+  switch (periodo) {
+    case "Semana":
+      return diasSemana[date.getDay()];
+    case "Mês":
+      return date.getDate().toString().padStart(2, "0");
+    case "Ano":
+      return mesesAno[date.getMonth()];
+    default:
+      return date.toLocaleDateString("pt-BR");
+  }
+}
+
+
 // 🔹 Gerar relatório
 async function gerarRelatorio() {
   if (!carregado.value) {
@@ -136,7 +158,10 @@ async function gerarRelatorio() {
     console.log("Resposta do backend:", response.data);
 
     series.value[0].data = response.data.valores;
-    chartOptions.value.xaxis.categories = response.data.categorias;
+chartOptions.value.xaxis.categories = response.data.categorias.map(cat =>
+  formatarLabelPorPeriodo(cat, periodo.value)
+);
+
 
     // Verifica se não há dados
     semDados.value = response.data.valores.length === 0;
@@ -195,6 +220,7 @@ onMounted(carregarDadosLogin);
 }
 
 .lado-direito {
+  margin-bottom: 20%;
   width: 60%;
   background: white;
   border-radius: 12px;
