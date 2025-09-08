@@ -1,6 +1,6 @@
 <template>
   <div class="tela">
-    <!-- Botão de voltar -->
+    <!-- Botão de voltar para algum lugar -->
     <button class="botao-voltar" @click="goHome()" aria-label="Voltar">
       <svg viewBox="0 0 24 24">
         <polyline points="15 18 9 12 15 6" />
