@@ -6,14 +6,13 @@
           src="../assets/user.png"
           alt="Foto do usuario"
           class="q-mt-lg"
-          style="width: 180px; height: auto;"
+          style="width: 180px; height: auto"
         />
       </div>
       <div
         class="q-pa-lg column q-gutter-md"
-        style="max-width: 500px; width: 100%; border-radius: 12px;"
+        style="max-width: 500px; width: 100%; border-radius: 12px"
       >
-        <!-- Email -->
         <div>
           <label class="input-label">Email ou nome de usuário:</label>
           <input
@@ -24,16 +23,22 @@
             autocomplete="username"
           />
         </div>
-        <!-- Senha -->
         <div class="senha">
           <label class="input-label">Senha:</label>
-          <input
-            type="password"
-            v-model="form.senha"
-            placeholder="Digite sua senha"
-            class="input-field"
-            autocomplete="current-password"
-          />
+          <div class="input-wrapper">
+            <input
+              :type="showPassword ? 'text' : 'password'"
+              v-model="form.senha"
+              placeholder="Digite sua senha"
+              class="input-field"
+              autocomplete="current-password"
+            />
+            <q-icon
+              :name="showPassword ? 'visibility_off' : 'visibility'"
+              class="toggle-password-icon"
+              @click="showPassword = !showPassword"
+            />
+          </div>
         </div>
         <router-link to="/redefinirSenha" class="forgot-password">Esqueci senha</router-link>
         <div class="btn-container">
@@ -45,7 +50,6 @@
           />
         </div>
       </div>
-      <!-- Mensagem de erro/alerta -->
       <div v-if="mensagem" class="mensagem-alerta">
         <p>{{ mensagem }}</p>
         <button @click="mensagem = ''" class="botao-fechar">Fechar</button>
@@ -61,6 +65,9 @@ import { useRouter } from 'vue-router'
 import { UiButton } from '../components/index.js'
 import { cadastroFuncionario } from '../stores/registroFuncionario.js'
 import { emailDono } from '../stores/registroDono.js'
+//import { AppVisibility } from 'quasar'
+
+const showPassword = ref(false)
 
 const router = useRouter()
 
@@ -260,5 +267,38 @@ const login = async () => {
     padding: 8px 16px;
     font-size: 0.9rem;
   }
+
+  .input-wrapper .input-field {
+    padding-right: 40px;
+  }
+
+  .toggle-password-icon {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #888;
+    font-size: 1.5rem;
+  }
+
+  .toggle-password-icon:hover {
+    color: #e7d04d;
+  }
+}
+
+.input-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.toggle-password-icon {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #888;
+  font-size: 1.5rem;
 }
 </style>

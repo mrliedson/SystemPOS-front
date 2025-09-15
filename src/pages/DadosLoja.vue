@@ -12,16 +12,26 @@
     <div class="form-row">
       <!-- Razão Social -->
       <div class="form-group full-width">
-        <label class="input-label">Razão Social: <text style="color: red;">*</text></label>
-        <input type="text" v-model="form.razaoSocial" placeholder="Digite a razão" class="text-input" />
+        <label class="input-label">Razão Social: <text style="color: red">*</text></label>
+        <input
+          type="text"
+          v-model="form.razaoSocial"
+          placeholder="Digite a razão"
+          class="text-input"
+        />
       </div>
     </div>
 
     <div class="form-row">
       <!-- Nome Fantasia -->
       <div class="form-group full-width">
-        <label class="input-label">Nome Fantasia: <text style="color: red;">*</text></label>
-        <input type="text" v-model="form.nomeFantasia" placeholder="Digite o nome" class="text-input" />
+        <label class="input-label">Nome Fantasia: <text style="color: red">*</text></label>
+        <input
+          type="text"
+          v-model="form.nomeFantasia"
+          placeholder="Digite o nome"
+          class="text-input"
+        />
       </div>
     </div>
 
@@ -29,11 +39,25 @@
       <div class="form-group">
         <!-- CNPJ -->
         <label class="input-label">CNPJ:</label>
-        <input type="text" v-model="form.cnpj" placeholder="Digite o CNPJ" class="text-input" />
+        <input
+          type="text"
+          v-model="form.cnpj"
+          placeholder="Digite o CNPJ"
+          class="text-input"
+          v-maska="{ mask: '##.###.###/####-##' }"
+          inputmode="numeric"
+        />
 
         <!-- Telefone -->
-        <label class="input-label">Telefone: <text style="color: red;">*</text></label>
-        <input type="text" v-model="form.telefone" placeholder="Digite o telefone da loja" class="text-input" />
+        <label class="input-label">Telefone: <text style="color: red">*</text></label>
+        <input
+          type="text"
+          v-model="form.telefone"
+          placeholder="Digite o telefone da loja"
+          class="text-input"
+          v-maska="{ mask: ['(##) ####-####', '(##) #####-####'] }"
+          inputmode="tel"
+        />
 
         <!-- WhatsApp -->
         <label class="checkbox-label">
@@ -44,8 +68,13 @@
 
       <!-- Código do dono -->
       <div class="form-group">
-        <label class="input-label">Código da empresa: <text style="color: red;">*</text></label>
-        <input type="text" v-model="form.codEmpresa" placeholder="Digite o código do dono" class="text-input" />
+        <label class="input-label">Código da empresa: <text style="color: red">*</text></label>
+        <input
+          type="text"
+          v-model="form.codEmpresa"
+          placeholder="Digite o código do dono"
+          class="text-input"
+        />
       </div>
     </div>
 

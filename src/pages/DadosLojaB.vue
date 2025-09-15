@@ -39,7 +39,14 @@
       <div class="form-group">
         <!-- CNPJ -->
         <label class="input-label">CNPJ:</label>
-        <input type="text" v-model="form.cnpj" placeholder="Digite o CNPJ" class="text-input" />
+        <input
+          type="text"
+          v-model="form.cnpj"
+          placeholder="Digite o CNPJ"
+          class="text-input"
+          v-maska="{ mask: '##.###.###/####-##' }"
+          inputmode="numeric"
+        />
 
         <!-- Telefone -->
         <label class="input-label">Telefone: <text style="color: red">*</text></label>
@@ -48,6 +55,8 @@
           v-model="form.telefone"
           placeholder="Digite o telefone da loja"
           class="text-input"
+          v-maska="{ mask: ['(##) ####-####', '(##) #####-####'] }"
+          inputmode="tel"
         />
 
         <!-- WhatsApp -->

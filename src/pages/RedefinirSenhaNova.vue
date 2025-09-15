@@ -13,22 +13,38 @@
 
     <div class="form">
       <label for="novaSenha" class="input-label">Nova senha:</label>
-      <input
-        type="password"
-        id="novaSenha"
-        v-model="novaSenha"
-        placeholder="Digite sua nova senha"
-        class="input-field"
-      />
+
+      <div class="input-wrapper">
+        <input
+          :type="showPassword ? 'text' : 'password'"
+          id="novaSenha"
+          v-model="novaSenha"
+          placeholder="Digite sua nova senha"
+          class="input-field"
+        />
+        <q-icon
+          :name="showPassword ? 'visibility_off' : 'visibility'"
+          class="toggle-password-icon"
+          @click="showPassword = !showPassword"
+        />
+      </div>
 
       <label for="confirmarSenha" class="input-label">Confirmar senha:</label>
-      <input
-        type="password"
-        id="confirmarSenha"
-        v-model="confirmarSenha"
-        placeholder="Confirme sua nova senha"
-        class="input-field"
-      />
+
+      <div class="input-wrapper">
+        <input
+          :type="showPasswordConfirm ? 'text' : 'password'"
+          id="confirmarSenha"
+          v-model="confirmarSenha"
+          placeholder="Confirme sua nova senha"
+          class="input-field"
+        />
+        <q-icon
+          :name="showPasswordConfirm ? 'visibility_off' : 'visibility'"
+          class="toggle-password-icon"
+          @click="showPasswordConfirm = !showPasswordConfirm"
+        />
+      </div>
 
       <div class="btn-container">
         <UiButton label="Redefinir" class="btn" @click="redefinirSenha" />
@@ -53,6 +69,9 @@ const router = useRouter()
 const mensagem = ref('')
 const novaSenha = ref('')
 const confirmarSenha = ref('')
+
+const showPassword = ref(false)
+const showPasswordConfirm = ref(false)
 
 const redefinirSenha = async () => {
   if (!novaSenha.value || !confirmarSenha.value) {
@@ -211,5 +230,28 @@ h1 {
 .btn-container {
   display: flex;
   justify-content: center;
+}
+
+.input-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.input-wrapper .input-field {
+  padding-right: 40px;
+}
+
+.toggle-password-icon {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #888;
+  font-size: 1.5rem;
+}
+
+.toggle-password-icon:hover {
+  color: #e7d04d;
 }
 </style>

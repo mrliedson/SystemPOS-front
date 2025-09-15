@@ -172,8 +172,10 @@
             type="text"
             v-model="form.preco"
             id="preco"
-            placeholder="Digite o preço do produto"
+            placeholder="R$ 00,00"
             class="text-input"
+            v-maska="{ mask: 'R$ #.##0,00', reverse: true }"
+            inputmode="decimal"
           />
         </div>
       </div>

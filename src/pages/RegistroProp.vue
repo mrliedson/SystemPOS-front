@@ -22,8 +22,10 @@
         <input
           type="text"
           v-model="form.telefone"
-          placeholder="Digite seu telefone"
+          placeholder="99 9999-9999"
           class="text-input"
+          v-maska="{ mask: ['(##) ####-####', '(##) #####-####'] }"
+          inputmode="tel"
         />
       </div>
     </div>
@@ -32,7 +34,14 @@
       <!-- CPF -->
       <div class="form-group">
         <label class="input-label">CPF: <text style="color: red">*</text></label>
-        <input type="text" v-model="form.cpf" placeholder="Digite seu CPF" class="text-input" />
+        <input
+          type="text"
+          v-model="form.cpf"
+          placeholder="Digite seu CPF"
+          class="text-input"
+          v-maska="{ mask: '##.###.###/####-##' }"
+          inputmode="numeric"
+        />
       </div>
 
       <!-- WhatsApp -->

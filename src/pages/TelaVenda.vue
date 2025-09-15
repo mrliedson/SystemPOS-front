@@ -37,6 +37,8 @@
             v-model="quantidade"
             placeholder="Digite a quantidade"
             class="text-input"
+            v-maska="{ mask: 'R$ #.##0,00', reverse: true }"
+            inputmode="decimal"
           />
         </div>
 

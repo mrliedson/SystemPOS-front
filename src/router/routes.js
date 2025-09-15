@@ -3,8 +3,8 @@ const page = (name) => () => import(`src/pages/${name}.vue`)
 const routes = [
   {
     path: '/',
-    component: page('MainLayout'),
-    children: [{ path: '', component: page('IndexPage') }],
+    component: page('RedefinirSenha'),
+    //children: [{ path: '', component: page('IndexPage') }],
   },
 
   // Páginas principais
@@ -38,7 +38,6 @@ const routes = [
   { path: '/alterarPrecoParticular', component: page('AlterarPrecoParticular') },
   { path: '/descricaoDetalhada', component: page('DescricaoDetalhada') },
 
-
   // Funcionários e usuários
   { path: '/cadastroFuncionario', component: page('CadastroFuncionario') },
   { path: '/listarUsuarios', component: page('ListarUsuarios') },
@@ -49,14 +48,13 @@ const routes = [
   { path: '/TelaVenda', component: page('TelaVenda') },
   { path: '/FecharCaixa', component: page('CaixaFechado') },
   { path: '/CaixaLivre', component: page('CaixaLivre') },
-{ path: '/TelaPagamento', component: page('TelaPagamento') },
+  { path: '/TelaPagamento', component: page('TelaPagamento') },
 
   // Histórico e outros
   { path: '/historicoPage', component: page('HistoricoPage') },
   { path: '/escolherEmpresa', component: page('EscolherEmpresa') },
   { path: '/listarVendas', component: page('ListarVendas') },
   { path: '/graficos', component: page('RelatorioGrafico') },
-
 
   // Pagina inicial
   { path: '/mainLayout', component: page('MainLayout') },

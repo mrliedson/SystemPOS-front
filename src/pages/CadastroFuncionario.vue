@@ -32,6 +32,8 @@
         name="telefone"
         placeholder="Digite seu telefone"
         class="text-input"
+        v-maska="{ mask: ['(##) ####-####', '(##) #####-####'] }"
+        inputmode="tel"
       />
     </div>
 
