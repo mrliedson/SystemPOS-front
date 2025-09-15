@@ -1,14 +1,17 @@
 <template>
   <div class="tela">
     <!-- Botão de voltar para algum lugar -->
+    <q-toolbar class="text-white q-mt-xl">
     <button class="botao-voltar" @click="goHome()" aria-label="Voltar">
       <svg viewBox="0 0 24 24">
         <polyline points="15 18 9 12 15 6" />
       </svg>
     </button>
-
+    <q-toolbar-title>
     <!-- Título da tela -->
     <h1 class="title">ALTERAR PREÇO</h1>
+    </q-toolbar-title>
+    </q-toolbar>
 
     <div class="tudo">
       <div class="pesquisar">
@@ -169,7 +172,6 @@ async function goDescricao(produto) {
 
 <style scoped>
 .tela {
-  height: 100vh;
   flex-direction: column;
   align-items: center;
   justify-content: start;
@@ -188,13 +190,12 @@ async function goDescricao(produto) {
 }
 
 .logo {
-  width: 80%;
-  height: 80%;
-  object-fit: cover;
+  width: 50%;
+  height: auto;
 }
 .scrollview {
-  width: 100%;
-  height: 100%;
+  width: 120%;
+  height: 75%;
   overflow-y: auto;
   border-radius: 8px;
   padding: 20px;
@@ -215,7 +216,7 @@ async function goDescricao(produto) {
 }
 
 .img {
-  width: 120px;
+  width: 100px;
   height: 120px;
   object-fit: cover;
   border-radius: 10px;
@@ -282,7 +283,6 @@ async function goDescricao(produto) {
   justify-content: center;
   cursor: pointer;
   padding: 20px;
-  position: absolute;
   top: 20px;
   left: 20px;
   z-index: 1000;
@@ -315,9 +315,7 @@ async function goDescricao(produto) {
   display: flex;
   flex-direction: column; /* Alinha os itens em coluna */
   gap: 10px; /* Espaçamento entre os itens */
-  justify-content: center; /* Alinha os itens no centro do contêiner verticalmente */
   align-items: center; /* Centraliza os itens horizontalmente */
-  height: 100%; /* Garante que o contêiner ocupe toda a altura disponível */
 }
 
 .scrollview::-webkit-scrollbar {
@@ -361,7 +359,7 @@ async function goDescricao(produto) {
 }
 
 .barra-pesquisa {
-  width: 100%;
+  width: 120%;
   padding: 12px 15px 12px 45px;
   font-size: 18px;
   border-radius: 24px;

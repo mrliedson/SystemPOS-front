@@ -3,7 +3,7 @@ const page = (name) => () => import(`src/pages/${name}.vue`)
 const routes = [
   {
     path: '/',
-    component: page('RedefinirSenha'),
+    component: page('HomePage'),
     //children: [{ path: '', component: page('IndexPage') }],
   },
 

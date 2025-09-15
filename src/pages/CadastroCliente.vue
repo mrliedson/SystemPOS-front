@@ -1,23 +1,25 @@
 <template>
   <div class="container-data-store">
     <!-- Botão de voltar -->
-    <button class="botao-voltar" @click="goHome" aria-label="Voltar">
-      <svg viewBox="0 0 24 24">
-        <polyline points="15 18 9 12 15 6" />
-      </svg>
-    </button>
-
-    <h1 class="title">CADASTRO DE CLIENTE</h1>
-
+    <q-toolbar class="text-white">
+      <button class="botao-voltar" @click="goHome" aria-label="Voltar">
+        <svg viewBox="0 0 24 24">
+          <polyline points="15 18 9 12 15 6" />
+        </svg>
+      </button>
+      <q-toolbar-title>
+        <h1>CADASTRO DE CLIENTE</h1>
+      </q-toolbar-title>
+    </q-toolbar>
     <div class="form-row">
       <div class="form-group full-width">
         <label class="input-label">Nome: <text style="color: red;">*</text></label>
-        <input 
-          type="text" 
-          v-model="form.nome" 
+        <input
+          type="text"
+          v-model="form.nome"
           :placeholder="nomePlaceholder"
-          class="text-input" 
-          :class="{ 'campo-incorreto': !form.nome && validado}" 
+          class="text-input"
+          :class="{ 'campo-incorreto': !form.nome && validado}"
         />
       </div>
     </div>
@@ -25,9 +27,9 @@
     <div class="form-row">
       <div class="form-group">
         <label class="input-label">CPF:</label>
-        <input 
-          type="text" 
-          v-model="form.cpf" 
+        <input
+          type="text"
+          v-model="form.cpf"
           placeholder="Digite o CPF do cliente"
           class="text-input"
         />
@@ -35,11 +37,11 @@
 
       <div class="form-group">
         <label class="input-label">Telefone:</label>
-        <input 
-          type="text" 
-          v-model="form.telefone" 
+        <input
+          type="text"
+          v-model="form.telefone"
           placeholder="Digite o telefone"
-          class="text-input" 
+          class="text-input"
           :class="{ 'campo-incorreto': !form.telefone && validado}"
         />
       </div>
@@ -48,12 +50,12 @@
     <div class="form-row">
       <div class="form-group full-width">
         <label class="input-label">Email: <text style="color: red;">*</text></label>
-        <input 
-          type="text" 
-          v-model="form.email" 
+        <input
+          type="text"
+          v-model="form.email"
           :placeholder="emailPlaceholder"
           class="text-input"
-          :class="{ 'campo-incorreto': !form.email && validado}" 
+          :class="{ 'campo-incorreto': !form.email && validado}"
         />
       </div>
     </div>
@@ -61,12 +63,12 @@
     <div class="form-row">
       <div class="form-group full-width">
         <label class="input-label">Endereço: <text style="color: red;">*</text></label>
-        <input 
-          type="text" 
-          v-model="form.endereco" 
+        <input
+          type="text"
+          v-model="form.endereco"
           :placeholder="enderecoPlaceholder"
           class="text-input"
-          :class="{ 'campo-incorreto': !form.endereco && validado}" 
+          :class="{ 'campo-incorreto': !form.endereco && validado}"
         />
       </div>
     </div>

@@ -1,13 +1,17 @@
 <template>
   <div class="container-registro-usuario">
     <!-- Botão de voltar -->
-    <div class="container-titulo">
+    <div class="row items-start q-pa-lg">
+      <q-toolbar class="text-white" >
       <button class="botao-voltar" @click="router.back()" aria-label="Voltar">
         <svg viewBox="0 0 24 24">
           <polyline points="15 18 9 12 15 6" />
         </svg>
       </button>
-      <h1 style="text-align: center; font-size: 50px; font-weight: bold; color: white">CADASTRO</h1>
+      <q-toolbar-title >
+        <h1 style="text-align: center; font-size: 50px; font-weight: bold; color: white; margin-left: 25%;">CADASTRO</h1>
+      </q-toolbar-title>
+      </q-toolbar>
     </div>
 
     <!-- Email -->
@@ -276,11 +280,11 @@ function handleNext() {
   background-color: #333;
   border: none;
   border-radius: 50%;
-  justify-content: end;
   cursor: pointer;
   transition: background-color 0.2s ease;
   margin-top: 20px;
   margin-left: -210px;
+
   z-index: 1000;
 }
 

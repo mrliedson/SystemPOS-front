@@ -32,13 +32,6 @@
     <div class="form-row">
       <!-- Nome Fantasia -->
       <div class="form-group full-width">
-        <label class="input-label">Nome Fantasia: <text style="color: red">*</text></label>
-        <input
-          type="text"
-          v-model="form.nomeFantasia"
-          placeholder="Digite o nome"
-          class="text-input"
-        />
         <label class="input-label">Nome Fantasia: <text style="color: red;">*</text></label>
         <input
         type="text"
@@ -67,28 +60,12 @@
         <input
           type="text"
           v-model="form.telefone"
-          placeholder="Digite o telefone da loja"
+          :placeholder="telefonePlaceholder"
           class="text-input"
+          :class="{ 'campo-incorreto': !form.telefone && validado}"
           v-maska="{ mask: ['(##) ####-####', '(##) #####-####'] }"
           inputmode="tel"
         />
-        <input
-        type="text"
-        v-model="form.cnpj"
-        placeholder="Digite o CNPJ"
-        v-maska="{ mask: '##.###.###/####-##' }"
-        inputmode="numeric"
-        class="text-input" />
-
-        <!-- Telefone -->
-        <label class="input-label">Telefone: <text style="color: red;">*</text></label>
-        <input
-        type="text"
-        v-model="form.telefone"
-        :placeholder="telefonePlaceholder"
-        class="text-input"
-        :class="{ 'campo-incorreto': !form.telefone && validado}" />
-
         <!-- WhatsApp -->
         <label class="checkbox-label">
           <input type="checkbox" v-model="form.whatsapp" />
@@ -98,13 +75,6 @@
 
       <!-- Código do dono -->
       <div class="form-group">
-        <label class="input-label">Código da empresa: <text style="color: red">*</text></label>
-        <input
-          type="text"
-          v-model="form.codEmpresa"
-          placeholder="Digite o código do dono"
-          class="text-input"
-        />
         <label class="input-label">Código da empresa: <text style="color: red;">*</text></label>
         <input type="text"
         v-model="form.codEmpresa"
@@ -261,7 +231,7 @@ const goHome = () => {
 
 .next {
   display: block;
-  width: 60%;
+  width: 250px;
   max-width: 300px;
   height: 60px;
   margin: 30px auto 0 auto;

@@ -1,11 +1,14 @@
 <template>
-  <button class="botao-voltar" @click="router.back()" aria-label="Voltar">
-    <svg viewBox="0 0 24 24">
-      <polyline points="15 18 9 12 15 6" />
-    </svg>
-  </button>
-
-  <h1 class="title">COM QUAL EMPRESA DESEJA ENTRAR?</h1>
+  <q-toolbar class="text-white">
+    <button class="botao-voltar" @click="router.back()" aria-label="Voltar">
+      <svg viewBox="0 0 24 24">
+        <polyline points="15 18 9 12 15 6" />
+      </svg>
+    </button>
+    <q-toolbar-title>
+    <h1 class="title">COM QUAL EMPRESA DESEJA ENTRAR?</h1>
+    </q-toolbar-title>
+  </q-toolbar>
 
   <div class="Box-laranja">
     <div class="linha-btn1">
@@ -182,11 +185,8 @@ body,
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  margin-left: 8px;
   transition: background-color 0.2s ease;
-  padding: 20px;
-  position: absolute;
-  top: 20px;
-  left: 20px;
   z-index: 1000;
 }
 

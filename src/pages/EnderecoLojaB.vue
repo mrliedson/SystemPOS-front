@@ -12,11 +12,11 @@
     <div class="form-row">
       <div class="form-group">
         <label class="input-label">CEP: <text style="color: red">*</text></label>
-        <input 
-        type="text" 
-        v-model="form.cep" 
+        <input
+        type="text"
+        v-model="form.cep"
         :placeholder="CEPPlaceholder"
-        class="text-input" 
+        class="text-input"
         :class="{ 'campo-incorreto': !form.cep && validado}"/>
       </div>
 
@@ -34,21 +34,21 @@
     <div class="form-row">
       <div class="form-group">
         <label class="input-label">Estado: <text style="color: red">*</text></label>
-        <input 
-        type="text" 
-        v-model="form.estado" 
+        <input
+        type="text"
+        v-model="form.estado"
         :placeholder="estadoPlaceholder"
-        class="text-input" 
+        class="text-input"
         :class="{ 'campo-incorreto': !form.estado && validado}"/>
       </div>
 
       <div class="form-group">
         <label class="input-label">Número: <text style="color: red">*</text></label>
-        <input 
-        type="text" 
-        v-model="form.numero" 
+        <input
+        type="text"
+        v-model="form.numero"
         :placeholder="numeroPlaceholder"
-        class="text-input" 
+        class="text-input"
         :class="{ 'campo-incorreto': !form.numero && validado}"/>
       </div>
     </div>
@@ -56,11 +56,11 @@
     <div class="form-row">
       <div class="form-group">
         <label class="input-label">Cidade: <text style="color: red">*</text></label>
-        <input 
-        type="text" 
-        v-model="form.cidade" 
+        <input
+        type="text"
+        v-model="form.cidade"
         :placeholder="cidadePlaceholder"
-        class="text-input" 
+        class="text-input"
         :class="{ 'campo-incorreto': !form.cidade && validado}"/>
       </div>
 
@@ -78,11 +78,11 @@
     <div class="form-row">
       <div class="form-group full-width">
         <label class="input-label">Bairro: <text style="color: red">*</text></label>
-        <input 
-        type="text" 
-        v-model="form.bairro" 
+        <input
+        type="text"
+        v-model="form.bairro"
         :placeholder="bairroPlaceholder"
-        class="text-input" 
+        class="text-input"
         :class="{ 'campo-incorreto': !form.bairro && validado}"/>
       </div>
     </div>
@@ -246,7 +246,7 @@ async function handleSubmit() {
 
 .next {
   display: block;
-  width: 60%;
+  width: 250px;
   max-width: 300px;
   height: 60px;
   margin: 30px auto 0 auto;

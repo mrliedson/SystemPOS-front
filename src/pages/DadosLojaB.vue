@@ -205,7 +205,7 @@ const goHome = () => {
 
 .next {
   display: block;
-  width: 60%;
+  width: 250px;
   max-width: 300px;
   height: 60px;
   margin: 30px auto 0 auto;

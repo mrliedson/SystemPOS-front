@@ -26,20 +26,25 @@
       </svg>
     </button>
 
-    <button
-      v-if="mostrarTrocarEmpresa"
-      class="botao-trocar-empresa"
-      @click="router.push('/escolherEmpresa')"
-      aria-label="Trocar Empresa"
+    <div
+      class="q-ml-auto q-mr-xl q-mb-xl"
+      style="margin-bottom: 100px;"
     >
-      <svg viewBox="0 0 24 24">
-        <path
-          d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77
-             L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"
-          fill="white"
-        />
-      </svg>
-    </button>
+      <button
+        v-if="mostrarTrocarEmpresa"
+        class="botao-trocar-empresa"
+        @click="router.push('/escolherEmpresa')"
+        aria-label="Trocar Empresa"
+      >
+        <svg viewBox="0 0 24 24">
+          <path
+            d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77
+               L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"
+            fill="white"
+          />
+        </svg>
+      </button>
+    </div>
 
     <div class="bemvindo">Bem Vindo, {{ usuario }}!</div>
 
@@ -101,19 +106,21 @@
       />
     </div>
 
-    <button
-      v-if="form.gerenciarPermissoes"
-      class="botao-engrenagem"
-      @click="abrirConfiguracoes"
-      aria-label="Configurações"
-    >
-      <svg viewBox="0 0 24 24">
-        <path
-          d="M12 15.5A3.5 3.5 0 1 0 12 8.5a3.5 3.5 0 0 0 0 7zm7.94-2.5c.04-.33.06-.66.06-1s-.02-.67-.06-1l2.03-1.58a.5.5 0 0 0 .11-.63l-1.92-3.32a.5.5 0 0 0-.6-.22l-2.39.96a7.05 7.05 0 0 0-1.73-1L15.5 2.5a.5.5 0 0 0-.5-.5h-4a.5.5 0 0 0-.5.5l-.38 2.43a7.05 7.05 0 0 0-1.73 1l-2.39-.96a.5.5 0 0 0-.6.22L2.92 8.42a.5.5 0 0 0 .11.63L5.06 10.63a7.44 7.44 0 0 0 0 2L3.03 14.2a.5.5 0 0 0-.11.63l1.92 3.32a.5.5 0 0 0 .6.22l2.39-.96a7.05 7.05 0 0 0 1.73 1l.38 2.43a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5l.38-2.43a7.05 7.05 0 0 0 1.73-1l2.39.96a.5.5 0 0 0 .6-.22l1.92-3.32a.5.5 0 0 0-.11-.63l-2.03-1.58z"
-          fill="white"
-        />
-      </svg>
-    </button>
+    <div class="q-ml-auto q-mr-xl flex-coluna q-mt-xl">
+      <button
+        v-if="form.gerenciarPermissoes"
+        class="botao-engrenagem"
+        @click="abrirConfiguracoes"
+        aria-label="Configurações"
+      >
+        <svg viewBox="0 0 24 24">
+          <path
+            d="M12 15.5A3.5 3.5 0 1 0 12 8.5a3.5 3.5 0 0 0 0 7zm7.94-2.5c.04-.33.06-.66.06-1s-.02-.67-.06-1l2.03-1.58a.5.5 0 0 0 .11-.63l-1.92-3.32a.5.5 0 0 0-.6-.22l-2.39.96a7.05 7.05 0 0 0-1.73-1L15.5 2.5a.5.5 0 0 0-.5-.5h-4a.5.5 0 0 0-.5.5l-.38 2.43a7.05 7.05 0 0 0-1.73 1l-2.39-.96a.5.5 0 0 0-.6.22L2.92 8.42a.5.5 0 0 0 .11.63L5.06 10.63a7.44 7.44 0 0 0 0 2L3.03 14.2a.5.5 0 0 0-.11.63l1.92 3.32a.5.5 0 0 0 .6.22l2.39-.96a7.05 7.05 0 0 0 1.73 1l.38 2.43a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5l.38-2.43a7.05 7.05 0 0 0 1.73-1l2.39.96a.5.5 0 0 0 .6-.22l1.92-3.32a.5.5 0 0 0-.11-.63l-2.03-1.58z"
+            fill="white"
+          />
+        </svg>
+      </button>
+    </div>
   </div>
 </template>
 
@@ -266,7 +273,8 @@ onMounted(() => {
   grid-template-columns: repeat(2, 1fr);
   gap: 30px;
   justify-items: center;
-  margin-top: 100px;
+  align-items: center;
+  align-content: center;
 }
 
 .buttons > *:last-child:nth-child(odd) {
@@ -326,14 +334,10 @@ onMounted(() => {
   display: flex;
   align-items: center;
   justify-content: center;
-  position: absolute;
-  bottom: 20px;
-  right: 20px;
   cursor: pointer;
   transition: background-color 0.2s ease;
   z-index: 1000;
 }
-
 .botao-engrenagem:hover {
   background-color: #666;
 }
@@ -353,9 +357,6 @@ onMounted(() => {
   display: flex;
   align-items: center;
   justify-content: center;
-  position: absolute;
-  top: 20px;
-  right: 20px;
   cursor: pointer;
   transition: background-color 0.2s ease;
   z-index: 1000;

@@ -10,7 +10,7 @@
         />
       </div>
       <div
-        class="q-pa-lg column q-gutter-md"
+        
         style="max-width: 500px; width: 100%; border-radius: 12px"
       >
         <div>
@@ -178,9 +178,12 @@ const login = async () => {
 
 <style scoped>
 .paginalogin-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   margin: 0;
   padding: 0;
-  min-height: 100vh; /* Garante que o body tenha pelo menos a altura da tela */
   background-image: url('../assets/fundoTCClogin.png');
   background-repeat: no-repeat;
   background-size: cover;
@@ -189,7 +192,7 @@ const login = async () => {
 }
 
 .input-field {
-  width: 100%;
+  width: 450px;
   height: 50px;
   font-size: 16px;
   padding: 10px;

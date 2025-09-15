@@ -284,7 +284,7 @@ async function handleNext() {
 
 .next {
   display: block;
-  width: 60%;
+  width: 250px;;
   max-width: 300px;
   height: 60px;
   margin: 30px auto 0 auto;
@@ -367,8 +367,8 @@ async function handleNext() {
   transition: background-color 0.2s ease;
   padding: 20px;
   position: absolute;
-  top: 20px;
-  left: 20px;
+  top: 50px;
+  left: 60px;
   z-index: 1000;
 }
 
