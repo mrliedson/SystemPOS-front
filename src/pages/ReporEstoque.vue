@@ -193,7 +193,7 @@ async function goDescricao(produto) {
 
 .scrollview {
   width: 100%;
-  height: 100%;
+  height: 80%;
   overflow-y: auto;
   border-radius: 8px;
   padding: 20px;

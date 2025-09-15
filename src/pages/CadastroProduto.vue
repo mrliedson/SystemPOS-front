@@ -488,7 +488,6 @@ body {
   height: 72px;
   background-color: #ff7f26;
   margin-top: 10%;
-  margin-left: 15%;
 }
 
 .next:hover {

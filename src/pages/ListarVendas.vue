@@ -286,8 +286,8 @@ html, body, #q-app {
   height: 6em;
   width: 17em;
   border-radius: 5rem;
-  background-color: #FF4D00;
-  border: 0.1em solid black;
+  background-color: #ffffff;
+  border: 0.1em solid rgb(138, 138, 138);
   cursor: pointer;
   z-index: 10;
 }

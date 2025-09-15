@@ -176,7 +176,7 @@ async function goDescricao(produto) {
   align-items: center;
   justify-content: start;
   padding: 20px;
-  position: relative;
+  margin-top: -80px;
 }
 .tudo {
   display: flex;
@@ -190,12 +190,12 @@ async function goDescricao(produto) {
 }
 
 .logo {
-  width: 50%;
+  width: 40%;
   height: auto;
 }
 .scrollview {
   width: 120%;
-  height: 75%;
+  height: 85%;
   overflow-y: auto;
   border-radius: 8px;
   padding: 20px;
