@@ -17,8 +17,9 @@
         v-model="form.nome"
         id="nome"
         name="nome"
-        placeholder="Digite seu nome"
+        :placeholder="nomePlaceholder"
         class="text-input"
+        :class="{ 'campo-incorreto': !form.nome  && validado}"
       />
     </div>
 
@@ -30,8 +31,9 @@
         v-model="form.telefone"
         id="telefone"
         name="telefone"
-        placeholder="Digite seu telefone"
+        :placeholder="telefonePlaceholder"
         class="text-input"
+        :class="{ 'campo-incorreto': !form.telefone && validado}"
       />
     </div>
 
@@ -46,7 +48,11 @@
     <!-- Gênero -->
     <div class="text-input-container">
       <label for="genero" class="input-label">Gênero: <text style="color: red">*</text></label>
-      <UiSelect v-model="form.genero" :options="customOptions" />
+      <UiSelect
+        v-model="form.genero"
+        :options="customOptions"
+        :class="{ 'campo-incorreto': !form.genero  && validado}"
+      />
     </div>
 
     <!-- Botão -->
@@ -76,71 +82,40 @@ const form = ref({
   whatsapp: false,
   genero: '',
 })
-const caixa = ref({
-  adicionarUsuario: 0,
-  adicionarProduto: 0,
-  relatorios: 0,
-  reporEstoque: 0,
-  gerenciarPermissoes: 0,
-  adicionarPromocao: 0,
-  cadastrarEmpresa: 0,
-  prestesAVencer: 0,
-  iniciarExpediente: 1,
-})
-const estoque = ref({
-  adicionarUsuario: 0,
-  adicionarProduto: 1,
-  relatorios: 0,
-  reporEstoque: 1,
-  gerenciarPermissoes: 0,
-  adicionarPromocao: 0,
-  cadastrarEmpresa: 0,
-  prestesAVencer: 0,
-  iniciarExpediente: 0,
-})
-const gerente = ref({
-  adicionarUsuario: 1,
-  adicionarProduto: 1,
-  relatorios: 1,
-  reporEstoque: 1,
-  gerenciarPermissoes: 1,
-  adicionarPromocao: 1,
-  cadastrarEmpresa: 0,
-  prestesAVencer: 1,
-  iniciarExpediente: 1,
-})
+
 const mensagem = ref('')
-const padroes = ref([])
 
+const nomePlaceholder = ref('Digite seu nome')
+const telefonePlaceholder = ref('Digite seu telefone')
+const validado = ref(false)
+
+// Função para enviar cadastro
 async function handleSubmit() {
-  if (!form.value.nome || !form.value.telefone || !form.value.genero) {
-    mensagem.value = 'Preencha todos os campos obrigatórios!'
-    return
+  validado.value = true // ativa validação
+  let valid = true
+
+  if (!form.value.nome) {
+    nomePlaceholder.value = 'Nome é obrigatório'
+    valid = false
   }
-  if (!form.value.telefone.length > 20) {
-    mensagem.value = 'Coloque um telefone valido!'
-    return
+  if (!form.value.telefone) {
+    telefonePlaceholder.value = 'Telefone é obrigatório'
+    valid = false
+  }
+  if (!form.value.genero) {
+    mensagem.value = 'Selecione o gênero!'
+    valid = false
   }
 
+  if (!valid) return
+
+  // Preenche dados na store
   cadastroFuncionario.value.dadosFuncionario.nome = form.value.nome
   cadastroFuncionario.value.dadosFuncionario.telefone = form.value.telefone
   cadastroFuncionario.value.dadosFuncionario.whatsapp = form.value.whatsapp
   cadastroFuncionario.value.dadosFuncionario.genero = form.value.genero
 
   try {
-    let padroesData
-    if (cadastroFuncionario.value.dadosLogin.tipo === 'caixa') {
-      padroesData = caixa.value
-    } else if (cadastroFuncionario.value.dadosLogin.tipo === 'estoque') {
-      padroesData = estoque.value
-    } else if (cadastroFuncionario.value.dadosLogin.tipo === 'gerente') {
-      padroesData = gerente.value
-    }
-
-    await axios.post('http://localhost:3333/padroes', padroesData)
-    const padroesResponse = await axios.get('http://localhost:3333/padroes')
-    padroes.value = padroesResponse.data || []
-
     await axios.post('http://localhost:3333/user', {
       nome: cadastroFuncionario.value.dadosFuncionario.nome,
       telefone: cadastroFuncionario.value.dadosFuncionario.telefone,
@@ -151,7 +126,6 @@ async function handleSubmit() {
       nomeUsuario: cadastroFuncionario.value.dadosLogin.nomeUsuario,
       senha: cadastroFuncionario.value.dadosLogin.senha,
       tipo: cadastroFuncionario.value.dadosLogin.tipo,
-      acesso: padroes.value[0].id,
     })
     mensagem.value = 'Cadastro concluído com sucesso!'
     router.push('/home')
@@ -208,6 +182,16 @@ async function handleSubmit() {
   outline: none;
 }
 
+/* Campos de erro */
+.campo-incorreto {
+  border-color: red;
+}
+
+.text-input::placeholder,
+.UiSelect::placeholder {
+  color: #d9534f;
+}
+
 .checkbox-container {
   margin-bottom: 20px;
 }
@@ -253,44 +237,6 @@ async function handleSubmit() {
   background-color: #ff7f26;
 }
 
-.voltar {
-  position: absolute;
-  top: 20px;
-  left: 20px;
-  background-color: #ff7f26;
-  color: white;
-  font-weight: bold;
-  padding: 10px 20px;
-  border-radius: 35px;
-  width: 80px;
-  font-size: 32px;
-}
-
-.voltar:hover {
-  background-color: #b14a01;
-}
-
-.voltar:active {
-  background-color: #ff7f26;
-}
-
-/* ✅ Mensagem de alerta */
-.mensagem-alerta {
-  position: fixed;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  background-color: #e64219;
-  color: white;
-  padding: 15px 20px;
-  border-radius: 10px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  z-index: 9999;
-}
-
 .botao-voltar {
   width: 80px;
   height: 80px;
@@ -321,5 +267,22 @@ async function handleSubmit() {
   stroke-linecap: round;
   stroke-linejoin: round;
   fill: none;
+}
+
+/* ✅ Mensagem de alerta */
+.mensagem-alerta {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #e64219;
+  color: white;
+  padding: 15px 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  z-index: 9999;
 }
 </style>

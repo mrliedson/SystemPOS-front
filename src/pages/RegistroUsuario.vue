@@ -7,14 +7,9 @@
           <polyline points="15 18 9 12 15 6" />
         </svg>
       </button>
-      <h1 style="
-        text-align: center;
-        font-size: 50px;
-        font-weight: bold;
-        color: white;
-      ">CADASTRO
-      </h1>
+      <h1 style="text-align: center; font-size: 50px; font-weight: bold; color: white">CADASTRO</h1>
     </div>
+
     <!-- Email -->
     <div class="email">
       <label for="email" class="input-label">Email: <text style="color: red">*</text></label>
@@ -23,8 +18,9 @@
         v-model="form.email"
         id="email"
         name="email"
-        placeholder="Digite seu email"
+        :placeholder="emailPlaceholder"
         class="text-input"
+        :class="{ 'campo-incorreto': !form.email && validado }"
       />
     </div>
 
@@ -38,8 +34,9 @@
         v-model="form.userlogin"
         id="nome"
         name="nome"
-        placeholder="Digite seu nome"
+        :placeholder="userloginPlaceholder"
         class="text-input"
+        :class="{ 'campo-incorreto': !form.userlogin && validado }"
       />
     </div>
 
@@ -52,8 +49,9 @@
           v-model="form.senha"
           id="senha"
           name="senha"
-          placeholder="Digite sua senha"
+          :placeholder="senhaPlaceholder"
           class="text-input"
+          :class="{ 'campo-incorreto': !form.senha && validado}"
         />
       </div>
       <div class="senhadnv">
@@ -65,18 +63,21 @@
           v-model="form.confirmarSenha"
           id="confirmarSenha"
           name="confirmarSenha"
-          placeholder="Digite sua senha novamente"
+          :placeholder="confirmarSenhaPlaceholder"
           class="text-input"
+          :class="{ 'campo-incorreto': !form.confirmarSenha && validado}"
         />
       </div>
     </div>
 
-    <div class="passwd">
-      <!-- Tipo -->
-      <div class="tipo">
-        <label for="tipo" class="input-label">Tipo: <text style="color: red">*</text></label>
-        <UiSelect v-model="form.tipo" :options="customOptions" />
-      </div>
+    <!-- Tipo -->
+    <div class="tipo">
+      <label for="tipo" class="input-label">Tipo: <text style="color: red">*</text></label>
+      <UiSelect
+        v-model="form.tipo"
+        :options="customOptions"
+        :class="{ 'campo-incorreto': !form.tipo && validado}"
+      />
     </div>
 
     <!-- Botão -->
@@ -108,30 +109,56 @@ const form = ref({
 })
 
 const mensagem = ref('')
+const emailPlaceholder = ref('Digite seu email')
+const userloginPlaceholder = ref('Digite seu nome')
+const senhaPlaceholder = ref('Digite sua senha')
+const confirmarSenhaPlaceholder = ref('Digite sua senha novamente')
+const validado = ref(false)
 
 function handleNext() {
-  if (
-    !form.value.email ||
-    !form.value.userlogin ||
-    !form.value.senha ||
-    !form.value.confirmarSenha ||
-    !form.value.tipo
-  ) {
-    mensagem.value = 'Preencha todos os campos!'
-    return
+  validado.value = true // ativa validação
+  let valid = true
+
+  // Verificar campos vazios
+  if (!form.value.email) {
+    emailPlaceholder.value = 'Email é obrigatório'
+    valid = false
   }
+  if (!form.value.userlogin) {
+    userloginPlaceholder.value = 'Nome de usuário é obrigatório'
+    valid = false
+  }
+  if (!form.value.senha) {
+    senhaPlaceholder.value = 'Senha é obrigatória'
+    valid = false
+  }
+  if (!form.value.confirmarSenha) {
+    confirmarSenhaPlaceholder.value = 'Confirme a senha'
+    valid = false
+  }
+  if (!form.value.tipo) {
+    mensagem.value = 'Selecione o tipo de usuário'
+    valid = false
+  }
+
+  // Validações adicionais
   if (form.value.senha.length < 8) {
-    mensagem.value = 'A senha teve ter mais de 8 digitos!'
-    return
+    mensagem.value = 'A senha deve ter mais de 8 dígitos!'
+    valid = false
   }
   if (form.value.userlogin.length >= 25) {
-    mensagem.value = 'O nome de usuário deve ter menos de 25 digitos!'
-    return
+    mensagem.value = 'O nome de usuário deve ter menos de 25 dígitos!'
+    valid = false
   }
   if (form.value.senha !== form.value.confirmarSenha) {
     mensagem.value = 'As senhas não coincidem!'
+    valid = false
+  }
+
+  if (!valid) {
     return
   }
+
   let codEmpresa = cadastroFuncionario.value.dadosLogin.codEmpresa
   // Salvar dados na store
   cadastroFuncionario.value.dadosLogin = {
@@ -151,7 +178,6 @@ function handleNext() {
 </script>
 
 <style scoped>
-
 .container-titulo {
   display: flex;
   align-items: center;
@@ -218,6 +244,15 @@ function handleNext() {
   background-color: #ff7f26;
 }
 
+/* Campos de erro */
+.campo-incorreto {
+  border: 2px solid red;
+}
+
+.campo-incorreto::placeholder {
+  color: red;
+}
+
 /* Mensagem de alerta */
 .mensagem-alerta {
   position: fixed;
@@ -247,7 +282,6 @@ function handleNext() {
   margin-top: 20px;
   margin-left: -210px;
   z-index: 1000;
-
 }
 
 .botao-voltar:hover {

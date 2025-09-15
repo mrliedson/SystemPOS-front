@@ -17,8 +17,9 @@
         type="password"
         id="novaSenha"
         v-model="novaSenha"
-        placeholder="Digite sua nova senha"
+        :placeholder="senhaNovaPlaceholder"
         class="input-field"
+        :class="{ 'campo-incorreto': !novaSenha && validado}"
       />
 
       <label for="confirmarSenha" class="input-label">Confirmar senha:</label>
@@ -26,8 +27,9 @@
         type="password"
         id="confirmarSenha"
         v-model="confirmarSenha"
-        placeholder="Confirme sua nova senha"
+        :placeholder="senhaNova2Placeholder"
         class="input-field"
+        :class="{ 'campo-incorreto': !confirmarSenha && validado}"
       />
 
       <div class="btn-container">
@@ -53,14 +55,24 @@ const router = useRouter()
 const mensagem = ref('')
 const novaSenha = ref('')
 const confirmarSenha = ref('')
+const senhaNovaPlaceholder = ref('Digite sua nova senha')
+const senhaNova2Placeholder = ref('Confirme a senha')
+const validado = ref(false)
 
 const redefinirSenha = async () => {
-  if (!novaSenha.value || !confirmarSenha.value) {
-    mensagem.value = 'Preencha todos os campos'
-    return
+  validado.value = true // ativa validação
+  let valid = true
+
+  // Verificar campos vazios
+  if (!novaSenha.value) {
+    senhaNovaPlaceholder.value = 'Nova senha é obrigatório'
+    valid = false
   }
-  if (novaSenha.value !== confirmarSenha.value) {
-    mensagem.value = 'As senhas não coincidem'
+  if (!confirmarSenha.value) {
+    senhaNova2Placeholder.value = 'Confirme senha é obrigatório'
+    valid = false
+  }
+  if (!valid) {
     return
   }
   try {
@@ -211,5 +223,11 @@ h1 {
 .btn-container {
   display: flex;
   justify-content: center;
+}
+.input-field.campo-incorreto {
+  border: 2px solid red !important;
+}
+.campo-incorreto::placeholder {
+  color: red;
 }
 </style>

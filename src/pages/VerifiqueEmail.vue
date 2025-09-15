@@ -18,8 +18,9 @@
         type="password"
         id="senhaAcesso"
         v-model="senhaAcesso"
-        placeholder="Digite sua senha de acesso"
+        :placeholder="senhaAcessoPlaceholder"
         class="input-field"
+        :class="{ 'campo-incorreto': !senhaAcesso && validado}"
         autocomplete="current-password"
       />
       <div class="btn-container">
@@ -44,10 +45,20 @@ import axios from 'axios'
 const router = useRouter()
 const mensagem = ref('')
 const senhaAcesso = ref('')
+const senhaAcessoPlaceholder = ref('Digite o codigo')
+const validado = ref(false)
 
 const verificarSenha = async () => {
+  validado.value = true // ativa validação
+  let valid = true
+
+  // Verificar campos vazios
   if (!senhaAcesso.value) {
-    mensagem.value = 'Por favor, preencha a senha de acesso'
+    senhaAcessoPlaceholder.value = 'Código é obrigatório'
+    valid = false
+  }
+  if (!valid) {
+    return
   }
   try {
     const response = await axios.post('http://localhost:3333/verificar-token', {
@@ -199,5 +210,13 @@ h1 {
 .btn-container {
   display: flex;
   justify-content: center;
+}
+.input-field.campo-incorreto {
+  border: 2px solid red !important;
+}
+
+
+.campo-incorreto::placeholder {
+  color: red;
 }
 </style>

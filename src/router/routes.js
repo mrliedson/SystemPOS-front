@@ -37,6 +37,7 @@ const routes = [
   { path: '/posAlterarPreco', component: page('PosAlterarPreco') },
   { path: '/alterarPrecoParticular', component: page('AlterarPrecoParticular') },
   { path: '/descricaoDetalhada', component: page('DescricaoDetalhada') },
+   { path: '/CadastrarCliente', component: page('CadastroCliente') },
 
 
   // Funcionários e usuários

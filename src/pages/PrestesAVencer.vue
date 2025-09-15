@@ -52,6 +52,10 @@
               <strong>Quantidade:</strong> <br />
               {{ produto.quantidade }}
             </div>
+            <div class="dado">
+              <strong>Preço:</strong> <br />
+              {{ produto.preco }}
+            </div>
 
             <div class="status" :class="getStatus(produto).cor">
               <span>{{ getStatus(produto).texto }}</span

@@ -18,8 +18,9 @@
           type="text"
           v-model="form.nome"
           id="nome"
-          placeholder="Digite o nome do produto"
+          :placeholder="nomePlaceholder"
           class="text-input"
+          :class="{ 'campo-incorreto': !form.nome && validado}"
         />
       </div>
 
@@ -31,8 +32,9 @@
           type="text"
           v-model="form.marca"
           id="marca"
-          placeholder="Digite a marca do produto"
+          :placeholder="marcaPlaceholder"
           class="text-input"
+          :class="{ 'campo-incorreto': !form.marca && validado}"
         />
       </div>
 
@@ -44,8 +46,9 @@
           type="text"
           v-model="form.tipo"
           id="tipo"
-          placeholder="Digite o tipo do produto"
+          :placeholder="tipoPlaceholder"
           class="text-input"
+          :class="{ 'campo-incorreto': !form.tipo && validado}"
         />
       </div>
 
@@ -57,8 +60,9 @@
           type="text"
           v-model="form.modelo"
           id="modelo"
-          placeholder="Digite o modelo do produto"
+          :placeholder="modeloPlaceholder"
           class="text-input"
+          :class="{ 'campo-incorreto': !form.modelo && validado}"
         />
       </div>
 
@@ -70,8 +74,9 @@
           type="text"
           v-model="form.categoria"
           id="categoria"
-          placeholder="Digite a categoria do produto"
+          :placeholder="categoriaPlaceholder"
           class="text-input"
+          :class="{ 'campo-incorreto': !form.cateoria && validado}"
         />
       </div>
 
@@ -85,19 +90,23 @@
             type="text"
             v-model="form.codBarras"
             id="codBarras"
-            placeholder="Digite o código"
+            :placeholder="codBarrasPlaceholder"
             class="text-input"
+            :class="{ 'campo-incorreto': !form.codBarras && validado}"
           />
         </div>
 
         <div class="form-group pequeno">
-          <label for="quantidade" class="input-label">Quantidade:</label>
+          <label for="quantidade" class="input-label"
+            >Quantidade: <text style="color: red">*</text></label
+          >
           <input
             type="text"
             v-model="form.quantidade"
             id="quantidade"
-            placeholder="Digite a quantidade"
+            :placeholder="quantidadePlaceholder"
             class="text-input"
+            :class="{ 'campo-incorreto': !form.quantidade && validado}"
           />
         </div>
       </div>
@@ -110,8 +119,10 @@
           type="text"
           v-model="form.codProduto"
           id="codProduto"
-          placeholder="Digite o código do produto"
+          :placeholder="codProdutoPlaceholder"
+          maxlength="10"
           class="text-input"
+          :class="{ 'campo-incorreto': !form.codProduto && validado}"
         />
       </div>
 
@@ -125,8 +136,9 @@
             type="text"
             v-model="form.estMin"
             id="estMin"
-            placeholder="Digite o estoque mínimo"
+            :placeholder="estMinPlaceholder"
             class="text-input"
+            :class="{ 'campo-incorreto': !form.estMin && validado}"
           />
         </div>
 
@@ -138,8 +150,9 @@
             type="text"
             v-model="form.estMax"
             id="estMax"
-            placeholder="Digite o estoque máximo"
+            :placeholder="estMaxPlaceholder"
             class="text-input"
+            :class="{ 'campo-incorreto': !form.estMax && validado}"
           />
         </div>
       </div>
@@ -151,6 +164,7 @@
           id="img"
           @change="handleFileChange"
           class="text-input file-input-estilizado"
+          :class="{ 'campo-incorreto': !form.img && validado}"
           accept="image/jpeg, image/png"
         />
       </div>
@@ -161,7 +175,13 @@
           <label for="dataValidade" class="input-label"
             >Data de validade: <text style="color: red">*</text></label
           >
-          <input type="date" v-model="form.dataValidade" id="dataValidade" class="text-input" />
+          <input 
+          type="date" 
+          v-model="form.dataValidade" 
+          id="dataValidade" 
+          class="text-input"
+          :class="{ 'campo-incorreto': !form.dataValidade && validado}"
+          />
         </div>
 
         <div class="form-group pequeno">
@@ -172,8 +192,9 @@
             type="text"
             v-model="form.preco"
             id="preco"
-            placeholder="Digite o preço do produto"
+            :placeholder="precoPlaceholder"
             class="text-input"
+            :class="{ 'campo-incorreto': !form.preco && validado}"
           />
         </div>
       </div>
@@ -219,6 +240,18 @@ const form = ref({
   img: null,
 })
 
+const nomePlaceholder = ref('Digite o nome do produto')
+const tipoPlaceholder = ref('Digite o tipo do produto')
+const marcaPlaceholder = ref('Digite a marca do produto')
+const modeloPlaceholder = ref('Digite o modelo do produto')
+const codBarrasPlaceholder = ref('Digite o código de barras')
+const categoriaPlaceholder = ref('Digite a categoria do produto')
+const codProdutoPlaceholder = ref('Digiteo código do produto')
+const estMinPlaceholder = ref('Digite o estoque mínimo')
+const estMaxPlaceholder = ref('Digite o estoque máximo')
+const precoPlaceholder = ref('Digite o preço do produto')
+const validado = ref(false)
+
 const voltar = () => {
   router.push('/home')
 }
@@ -231,23 +264,53 @@ const handleFileChange = (event) => {
 }
 
 async function handleNext() {
-  if (
-    !form.value.nome ||
-    !form.value.tipo ||
-    !form.value.marca ||
-    !form.value.modelo ||
-    !form.value.codBarras ||
-    !form.value.codProduto ||
-    !form.value.categoria ||
-    !form.value.dataValidade ||
-    !form.value.preco ||
-    !form.value.quantidade ||
-    !form.value.estMin ||
-    !form.value.estMax ||
-    !form.value.img
-  ) {
-    mensagem.value = 'Preencha todos os campos!'
-    return
+  //tirei validação de "prreencha todos os campos"
+  validado.value = true // ativa validação
+  let valid = true
+
+  // Verificar campos vazios
+  if (!form.value.nome) {
+    nomePlaceholder.value = 'Nome do produto é obrigatório'
+    valid = false
+  }
+  if (!form.value.tipo) {
+    tipoPlaceholder.value = 'Tipo do produto é obrigatório'
+    valid = false
+  }
+  if (!form.value.marca) {
+    marcaPlaceholder.value = 'Marca do produto é obrigatório'
+    valid = false
+  }
+  if (!form.value.modelo) {
+    modeloPlaceholder.value = 'Modelo do produto é obrigatório'
+    valid = false
+  }
+  if (!form.value.codBarras) {
+    codBarrasPlaceholder.value = 'Código de barras é obrigatório'
+    valid = false
+  }
+  if (!form.value.categoria) {
+    categoriaPlaceholder.value = 'Categoria do produto é obrigatório'
+    valid = false
+  }
+  if (!form.value.codProduto) {
+    codProdutoPlaceholder.value = 'Código do produto é obrigatório'
+    valid = false
+  }
+  if (!form.value.estMin) {
+    estMinPlaceholder.value = 'Estoque mínimo é obrigatório'
+    valid = false
+  }
+  if (!form.value.estMax) {
+    estMaxPlaceholder.value = 'Estoque máximo é obrigatório'
+    valid = false
+  }
+  if (!form.value.dataValidade) {
+    valid = false
+  }
+  if (!form.value.preco) {
+    precoPlaceholder.value = 'Preço do produto é obrigatório'
+    valid = false
   }
 
   const hoje = new Date()
@@ -306,6 +369,9 @@ async function handleNext() {
 
   if (!form.value.codEmpresa) {
     mensagem.value = 'Usuário não possui código da empresa'
+    return
+  }
+  if (!valid) {
     return
   }
 
@@ -527,5 +593,12 @@ body {
 
 .botao-fechar:hover {
   background: #eee;
+}
+
+.campo-incorreto {
+  border: 2px solid red !important;
+}
+.campo-incorreto::placeholder {
+  color: red;
 }
 </style>

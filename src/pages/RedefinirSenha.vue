@@ -18,8 +18,9 @@
         type="email"
         id="email"
         v-model="email"
-        placeholder="Digite seu email"
+        :placeholder="emailPlaceholder"
         class="input-field"
+        :class="{ 'campo-incorreto': !email && validado}"
         autocomplete="email"
       />
       <div class="btn-container">
@@ -44,12 +45,20 @@ import axios from 'axios'
 const router = useRouter()
 const mensagem = ref('')
 const email = ref('')
+const emailPlaceholder = ref('Digite seu email')
+const validado = ref(false)
 
 const redefinirSenha = async () => {
+  validado.value = true // ativa validação
+  let valid = true
+
+  // Verificar campos vazios
   if (!email.value) {
-    mensagem.value = 'Por favor, preencha o email'
-    return
+    emailPlaceholder.value = 'Email é obrigatório'
+    valid = false
   }
+  
+ 
   try {
     const response = await axios.get(`http://localhost:3333/user/${email.value}`)
     const usuario = response.data.message?.[0]
@@ -63,6 +72,9 @@ const redefinirSenha = async () => {
     } else {
       mensagem.value = 'Digite um e-mail válido ou já cadastrado!'
     }
+  if (!valid) {
+    return
+  }
   } catch (error) {
     console.error('Erro ao buscar e-mail:', error)
     mensagem.value = 'E-mail não encontrado na base de dados.'
@@ -197,5 +209,14 @@ h1 {
 .btn-container {
   display: flex;
   justify-content: center;
+}
+/* Campos de erro */
+.input-field.campo-incorreto {
+  border: 2px solid red !important;
+}
+
+
+.campo-incorreto::placeholder {
+  color: red;
 }
 </style>
