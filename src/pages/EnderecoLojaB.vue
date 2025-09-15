@@ -12,7 +12,12 @@
     <div class="form-row">
       <div class="form-group">
         <label class="input-label">CEP: <text style="color: red">*</text></label>
-        <input type="text" v-model="form.cep" placeholder="Digite o CEP" class="text-input" />
+        <input 
+        type="text" 
+        v-model="form.cep" 
+        :placeholder="CEPPlaceholder"
+        class="text-input" 
+        :class="{ 'campo-incorreto': !form.cep && validado}"/>
       </div>
 
       <div class="form-group">
@@ -20,7 +25,7 @@
         <input
           type="text"
           v-model="form.logradouro"
-          placeholder="Digite o endereço"
+          placeholder="Digite o logradouro"
           class="text-input"
         />
       </div>
@@ -29,19 +34,34 @@
     <div class="form-row">
       <div class="form-group">
         <label class="input-label">Estado: <text style="color: red">*</text></label>
-        <input type="text" v-model="form.estado" placeholder="Digite o estado" class="text-input" />
+        <input 
+        type="text" 
+        v-model="form.estado" 
+        :placeholder="estadoPlaceholder"
+        class="text-input" 
+        :class="{ 'campo-incorreto': !form.estado && validado}"/>
       </div>
 
       <div class="form-group">
         <label class="input-label">Número: <text style="color: red">*</text></label>
-        <input type="text" v-model="form.numero" placeholder="Digite o número" class="text-input" />
+        <input 
+        type="text" 
+        v-model="form.numero" 
+        :placeholder="numeroPlaceholder"
+        class="text-input" 
+        :class="{ 'campo-incorreto': !form.numero && validado}"/>
       </div>
     </div>
 
     <div class="form-row">
       <div class="form-group">
         <label class="input-label">Cidade: <text style="color: red">*</text></label>
-        <input type="text" v-model="form.cidade" placeholder="Digite a cidade" class="text-input" />
+        <input 
+        type="text" 
+        v-model="form.cidade" 
+        :placeholder="cidadePlaceholder"
+        class="text-input" 
+        :class="{ 'campo-incorreto': !form.cidade && validado}"/>
       </div>
 
       <div class="form-group">
@@ -58,7 +78,12 @@
     <div class="form-row">
       <div class="form-group full-width">
         <label class="input-label">Bairro: <text style="color: red">*</text></label>
-        <input type="text" v-model="form.bairro" placeholder="Digite o bairro" class="text-input" />
+        <input 
+        type="text" 
+        v-model="form.bairro" 
+        :placeholder="bairroPlaceholder"
+        class="text-input" 
+        :class="{ 'campo-incorreto': !form.bairro && validado}"/>
       </div>
     </div>
 
@@ -92,15 +117,39 @@ const form = ref({
   numero: '',
   complemento: '',
 })
+const CEPPlaceholder = ref('Digite seu CEP')
+const estadoPlaceholder = ref('Digite o estado')
+const numeroPlaceholder = ref('Digite o número')
+const cidadePlaceholder = ref('Digite a cidade')
+const bairroPlaceholder = ref('Digite o bairro')
+const validado = ref(false)
 
 async function handleSubmit() {
-  if (
-    !form.value.cep ||
-    !form.value.estado ||
-    !form.value.cidade ||
-    !form.value.bairro
-  ) {
-    mensagem.value = 'Preencha todos os campos obrigatórios marcados com *'
+  validado.value = true // ativa validação
+  let valid = true
+
+  // Verificar campos vazios
+  if (!form.value.cep) {
+    CEPPlaceholder.value = 'CEP é obrigatório'
+    valid = false
+  }
+  if (!form.value.estado) {
+    estadoPlaceholder.value = 'Estado é obrigatório'
+    valid = false
+  }
+  if (!form.value.numero) {
+    numeroPlaceholder.value = 'Número é obrigatório'
+    valid = false
+  }
+  if (!form.value.cidade) {
+    cidadePlaceholder.value = 'Cidade é obrigatório'
+    valid = false
+  }
+  if (!form.value.bairro) {
+    bairroPlaceholder.value = 'Bairro é obrigatório'
+    valid = false
+  }
+  if (!valid) {
     return
   }
 
@@ -297,5 +346,12 @@ async function handleSubmit() {
   stroke-linecap: round;
   stroke-linejoin: round;
   fill: none;
+}
+
+.campo-incorreto {
+  border: 2px solid red !important;
+}
+.campo-incorreto::placeholder {
+  color: red;
 }
 </style>

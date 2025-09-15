@@ -19,6 +19,13 @@
           placeholder="Digite a razão"
           class="text-input"
         />
+        <label class="input-label">Razão Social: <text style="color: red;">*</text></label>
+        <input
+         type="text"
+         v-model="form.razaoSocial"
+         :placeholder="razaoSocialPlaceholder"
+         class="text-input"
+        :class="{ 'campo-incorreto': !form.razaoSocial && validado}" />
       </div>
     </div>
 
@@ -32,6 +39,13 @@
           placeholder="Digite o nome"
           class="text-input"
         />
+        <label class="input-label">Nome Fantasia: <text style="color: red;">*</text></label>
+        <input
+        type="text"
+        v-model="form.nomeFantasia"
+        :placeholder="nomeFantasiaPlaceholder"
+        class="text-input"
+        :class="{ 'campo-incorreto': !form.nomeFantasia && validado}" />
       </div>
     </div>
 
@@ -58,6 +72,22 @@
           v-maska="{ mask: ['(##) ####-####', '(##) #####-####'] }"
           inputmode="tel"
         />
+        <input
+        type="text"
+        v-model="form.cnpj"
+        placeholder="Digite o CNPJ"
+        v-maska="{ mask: '##.###.###/####-##' }"
+        inputmode="numeric"
+        class="text-input" />
+
+        <!-- Telefone -->
+        <label class="input-label">Telefone: <text style="color: red;">*</text></label>
+        <input
+        type="text"
+        v-model="form.telefone"
+        :placeholder="telefonePlaceholder"
+        class="text-input"
+        :class="{ 'campo-incorreto': !form.telefone && validado}" />
 
         <!-- WhatsApp -->
         <label class="checkbox-label">
@@ -75,6 +105,12 @@
           placeholder="Digite o código do dono"
           class="text-input"
         />
+        <label class="input-label">Código da empresa: <text style="color: red;">*</text></label>
+        <input type="text"
+        v-model="form.codEmpresa"
+        :placeholder="codDonoPlaceholder"
+        class="text-input"
+        :class="{ 'campo-incorreto': !form.codEmpresa && validado}" />
       </div>
     </div>
 
@@ -107,15 +143,35 @@ const form = ref({
   codEmpresa: '',
 })
 
+const razaoSocialPlaceholder = ref('Digite a razão social')
+const nomeFantasiaPlaceholder = ref('Digite o nome fantasia')
+const telefonePlaceholder = ref('Digite o telefone')
+const codDonoPlaceholder = ref('Digite o código do dono')
+const validado = ref(false)
+
 function handleNext() {
-  if (
-    !form.value.razaoSocial ||
-    !form.value.nomeFantasia ||
-    !form.value.telefone ||
-    !form.value.cnpj ||
-    !form.value.codEmpresa
-  ) {
-    mensagem.value = 'Preencha todos os campos obrigatórios!'
+  validado.value = true // ativa validação
+  let valid = true
+
+  // Verificar campos vazios
+  if (!form.value.razaoSocial) {
+    razaoSocialPlaceholder.value = 'Razão social é obrigatório'
+    valid = false
+  }
+  if (!form.value.nomeFantasia) {
+    nomeFantasiaPlaceholder.value = 'Nome fantasia é obrigatório'
+    valid = false
+  }
+  if (!form.value.telefone) {
+    telefonePlaceholder.value = 'Telefone é obrigatório'
+    valid = false
+  }
+  if (!form.value.codDono) {
+    codDonoPlaceholder.value = 'Código do dono é obrigatório'
+    valid = false
+  }
+
+  if (!valid) {
     return
   }
 
@@ -305,5 +361,13 @@ const goHome = () => {
   stroke-linecap: round;
   stroke-linejoin: round;
   fill: none;
+}
+.campo-incorreto {
+  border: 2px solid red !important;
+}
+
+
+.campo-incorreto::placeholder {
+  color: red;
 }
 </style>

@@ -19,9 +19,10 @@
           :type="showPassword ? 'text' : 'password'"
           id="novaSenha"
           v-model="novaSenha"
-          placeholder="Digite sua nova senha"
+          :placeholder="senhaNovaPlaceholder"
           class="input-field"
-        />
+          :class="{ 'campo-incorreto': !novaSenha && validado}"
+      />
         <q-icon
           :name="showPassword ? 'visibility_off' : 'visibility'"
           class="toggle-password-icon"
@@ -36,9 +37,10 @@
           :type="showPasswordConfirm ? 'text' : 'password'"
           id="confirmarSenha"
           v-model="confirmarSenha"
-          placeholder="Confirme sua nova senha"
+          :placeholder="senhaNova2Placeholder"
           class="input-field"
-        />
+          :class="{ 'campo-incorreto': !confirmarSenha && validado}"
+      />
         <q-icon
           :name="showPasswordConfirm ? 'visibility_off' : 'visibility'"
           class="toggle-password-icon"
@@ -72,14 +74,24 @@ const confirmarSenha = ref('')
 
 const showPassword = ref(false)
 const showPasswordConfirm = ref(false)
+const senhaNovaPlaceholder = ref('Digite sua nova senha')
+const senhaNova2Placeholder = ref('Confirme a senha')
+const validado = ref(false)
 
 const redefinirSenha = async () => {
-  if (!novaSenha.value || !confirmarSenha.value) {
-    mensagem.value = 'Preencha todos os campos'
-    return
+  validado.value = true // ativa validação
+  let valid = true
+
+  // Verificar campos vazios
+  if (!novaSenha.value) {
+    senhaNovaPlaceholder.value = 'Nova senha é obrigatório'
+    valid = false
   }
-  if (novaSenha.value !== confirmarSenha.value) {
-    mensagem.value = 'As senhas não coincidem'
+  if (!confirmarSenha.value) {
+    senhaNova2Placeholder.value = 'Confirme senha é obrigatório'
+    valid = false
+  }
+  if (!valid) {
     return
   }
   try {
@@ -253,5 +265,11 @@ h1 {
 
 .toggle-password-icon:hover {
   color: #e7d04d;
+}
+.input-field.campo-incorreto {
+  border: 2px solid red !important;
+}
+.campo-incorreto::placeholder {
+  color: red;
 }
 </style>

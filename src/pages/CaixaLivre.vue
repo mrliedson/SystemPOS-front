@@ -14,6 +14,11 @@
 
   <div class="botoes">
     <UiButton
+      label="Cadastrar cliente"
+      class="btn"
+      @click="cadastrarCliente"
+    />
+    <UiButton
       label="Fechar caixa"
       class="btn"
       @click="fecharCaixa"
@@ -32,6 +37,9 @@ import { UiButton } from '../components/index.js'
 
 const router = useRouter()
 
+function cadastrarCliente() {
+  router.push('/CadastrarCliente')
+}
 function novaCompra() {
   router.push('/TelaVenda')
 }

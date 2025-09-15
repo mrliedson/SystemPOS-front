@@ -18,8 +18,9 @@
           <input
             type="text"
             v-model="form.email"
-            placeholder="Digite seu email"
+            :placeholder="emailPlaceholder"
             class="input-field"
+            :class="{ 'campo-incorreto': !form.email && validado }"
             autocomplete="username"
           />
         </div>
@@ -29,9 +30,10 @@
             <input
               :type="showPassword ? 'text' : 'password'"
               v-model="form.senha"
-              placeholder="Digite sua senha"
+              :placeholder="senhaPlaceholder"
               class="input-field"
-              autocomplete="current-password"
+              :class="{ 'campo-incorreto': !form.senha && validado}"
+            autocomplete="current-password"
             />
             <q-icon
               :name="showPassword ? 'visibility_off' : 'visibility'"
@@ -78,17 +80,29 @@ const form = ref({
 
 const isLoading = ref(false)
 const mensagem = ref('')
+const emailPlaceholder = ref('Digite seu email')
+const senhaPlaceholder = ref('Digite sua senha')
+const validado = ref(false)
 
 const login = async () => {
+  validado.value = true // ativa validação
+  let valid = true
+
+  // Verificar campos vazios
+  if (!form.value.email) {
+    emailPlaceholder.value = 'Email é obrigatório'
+    valid = false
+  }
+  if (!form.value.senha) {
+    senhaPlaceholder.value = 'Senha é obrigatória'
+    valid = false
+  }
+
+
   if (isLoading.value) return
 
   const loginInput = form.value.email.trim() // Pode ser email ou usuario.userLogin
   const senha = form.value.senha.trim()
-
-  if (!loginInput || !senha) {
-    mensagem.value = 'Preencha todos os campos!'
-    return
-  }
 
   if (senha.length < 8) {
     mensagem.value = 'A senha deve ter pelo menos 8 caracteres!'
@@ -149,7 +163,9 @@ const login = async () => {
 
     cadastroFuncionario.value.dadosLogin.codEmpresa = usuario.empresa_id
     cadastroFuncionario.value.dadosFuncionario.emailV = usuario.email
-
+    if (!valid) {
+    return
+  }
     router.push('/home')
   } catch (error) {
     console.error('Erro ao fazer login:', error)
@@ -252,6 +268,15 @@ const login = async () => {
 .botao-fechar:hover {
   background: #eee;
 }
+/* Campos de erro */
+.input-field.campo-incorreto {
+  border: 2px solid red !important;
+}
+
+
+.campo-incorreto::placeholder {
+  color: red;
+}
 
 @media (max-width: 480px) {
   .uilogo img {
@@ -302,3 +327,4 @@ const login = async () => {
   font-size: 1.5rem;
 }
 </style>
+

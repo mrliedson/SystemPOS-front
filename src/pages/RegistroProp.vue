@@ -13,7 +13,13 @@
       <!-- Nome -->
       <div class="form-group">
         <label class="input-label">Nome Completo: <text style="color: red">*</text></label>
-        <input type="text" v-model="form.nome" placeholder="Digite seu nome" class="text-input" />
+        <input
+          type="text"
+          v-model="form.nome"
+          :placeholder="nomePlaceholder"
+          class="text-input"
+          :class="{ 'campo-incorreto': !form.nome && validado }"
+        />
       </div>
 
       <!-- Telefone -->
@@ -22,10 +28,11 @@
         <input
           type="text"
           v-model="form.telefone"
-          placeholder="99 9999-9999"
+          :placeholder="telefonePlaceholder"
           class="text-input"
           v-maska="{ mask: ['(##) ####-####', '(##) #####-####'] }"
           inputmode="tel"
+          :class="{ 'campo-incorreto': !form.telefone && validado }"
         />
       </div>
     </div>
@@ -35,12 +42,18 @@
       <div class="form-group">
         <label class="input-label">CPF: <text style="color: red">*</text></label>
         <input
+
           type="text"
+
           v-model="form.cpf"
-          placeholder="Digite seu CPF"
+
+          :placeholder="cpfPlaceholder"
+
           class="text-input"
           v-maska="{ mask: '##.###.###/####-##' }"
           inputmode="numeric"
+
+          :class="{ 'campo-incorreto': !form.cpf && validado }"
         />
       </div>
 
@@ -58,15 +71,20 @@
         <input
           type="date"
           v-model="form.dataNascimento"
-          placeholder="Digite sua data de nascimento"
+          :placeholder="dataNascimentoPlaceholder"
           class="text-input"
+          :class="{ 'campo-incorreto': !form.dataNascimento && validado }"
         />
       </div>
 
       <!-- Gênero -->
       <div class="form-group">
         <label class="input-label">Gênero: <text style="color: red">*</text></label>
-        <UiSelect v-model="form.genero" :options="customOptions" />
+        <UiSelect
+          v-model="form.genero"
+          :options="customOptions"
+          :class="{ 'campo-incorreto': !form.genero && validado }"
+        />
       </div>
     </div>
 
@@ -77,8 +95,9 @@
         <input
           type="text"
           v-model="form.endereco"
-          placeholder="Digite seu endereço completo"
+          :placeholder="enderecoPlaceholder"
           class="text-input"
+          :class="{ 'campo-incorreto': !form.endereco && validado }"
         />
       </div>
 
@@ -88,8 +107,9 @@
         <input
           type="text"
           v-model="form.codDono"
-          placeholder="Digite o código do dono"
+          :placeholder="codDonoPlaceholder"
           class="text-input"
+          :class="{ 'campo-incorreto': !form.codDono && validado }"
         />
       </div>
     </div>
@@ -127,37 +147,64 @@ const form = ref({
   codDono: '',
 })
 
+const nomePlaceholder = ref('Digite seu nome')
+const telefonePlaceholder = ref('Digite seu telefone')
+const cpfPlaceholder = ref('Digite seu CPF')
+const dataNascimentoPlaceholder = ref('Digite sua data de nascimento')
+const enderecoPlaceholder = ref('Digite seu endereço completo')
+const codDonoPlaceholder = ref('Digite o código do dono')
+const validado = ref(false)
+
 async function handleNext() {
-  if (
-    !form.value.nome ||
-    !form.value.telefone ||
-    !form.value.cpf ||
-    !form.value.dataNascimento ||
-    !form.value.endereco ||
-    !form.value.codDono
-  ) {
-    mensagem.value = 'Preencha todos os campos obrigatórios!'
-    return
+  validado.value = true // ativa validação
+  let valid = true
+
+  if (!form.value.nome) {
+    nomePlaceholder.value = 'Nome obrigatório'
+    valid = false
   }
-  if (!form.value.telefone.length > 20) {
-    mensagem.value = 'Coloque um telefone valido!'
-    return
+  if (!form.value.telefone) {
+    telefonePlaceholder.value = 'Telefone obrigatório'
+    valid = false
   }
-  if (!form.value.cpf.length > 11) {
-    mensagem.value = 'Coloque um cpf valido!'
-    return
+  if (!form.value.cpf) {
+    cpfPlaceholder.value = 'CPF obrigatório'
+    valid = false
   }
-  // Validação de data de nascimento
+  if (!form.value.dataNascimento) {
+    dataNascimentoPlaceholder.value = 'Data de nascimento obrigatória'
+    valid = false
+  }
+  if (!form.value.endereco) {
+    enderecoPlaceholder.value = 'Endereço obrigatório'
+    valid = false
+  }
+  if (!form.value.codDono) {
+    codDonoPlaceholder.value = 'Código obrigatório'
+    valid = false
+  }
+
+  // Validações adicionais
+  if (form.value.telefone.length > 20) {
+    mensagem.value = 'Coloque um telefone válido!'
+    valid = false
+  }
+  if (form.value.cpf.length > 11) {
+    mensagem.value = 'Coloque um CPF válido!'
+    valid = false
+  }
   const hoje = new Date()
   const dataNas = new Date(form.value.dataNascimento)
   hoje.setHours(0, 0, 0, 0)
   dataNas.setHours(0, 0, 0, 0)
-
   if (dataNas > hoje) {
-    mensagem.value = 'A data de nacimento não pode ser posterior à data atual.'
-    return
+    mensagem.value = 'A data de nascimento não pode ser futura.'
+    valid = false
   }
 
+  if (!valid) return
+
+  // Salvar dados
   cadastroFuncionario.value.dadosFuncionario.nome = form.value.nome
   cadastroFuncionario.value.dadosFuncionario.telefone = form.value.telefone
   cadastroFuncionario.value.dadosFuncionario.whatsapp = form.value.whatsapp
@@ -209,7 +256,9 @@ async function handleNext() {
   margin-bottom: 8px;
 }
 
-.text-input {
+.text-input,
+.UiSelect {
+  width: 100%;
   height: 55px;
   font-size: 16px;
   padding: 12px;
@@ -218,7 +267,7 @@ async function handleNext() {
   cursor: text;
   transition: border-color 0.3s ease-in-out;
   box-sizing: border-box;
-  width: 100%;
+  color: #000000;
 }
 
 .text-input:focus {
@@ -335,5 +384,14 @@ async function handleNext() {
   stroke-linecap: round;
   stroke-linejoin: round;
   fill: none;
+}
+
+/* ✅ Campos com erro */
+.campo-incorreto {
+  border-color: red !important;
+}
+
+.campo-incorreto::placeholder {
+  color: red !important;
 }
 </style>
